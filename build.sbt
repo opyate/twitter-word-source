@@ -1,12 +1,14 @@
+import com.typesafe.sbt.SbtStartScript
+
+import SbtStartScript.StartScriptKeys._
+
 name := "wordsource"
 
 version := "0.1.0"
 
 scalaVersion := "2.10.3"
 
-seq(Revolver.settings: _*)
-
-seq(Twirl.settings: _*)
+seq(SbtStartScript.startScriptForClassesSettings: _*)
 
 scalacOptions ++= Seq(
   "-unchecked",

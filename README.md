@@ -8,6 +8,10 @@ Gets words from Twitter and makes them available via an API, all the while recor
 
 Returns a word.
 
+## GET /api/count
+
+How many words have been served.
+
 ## GET /api/top{N}words
 
 *N* the number of top words

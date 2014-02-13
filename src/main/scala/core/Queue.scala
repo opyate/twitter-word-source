@@ -10,7 +10,7 @@ import scala.concurrent.Future
  */
 class Queue(db: RedisClient) {
 
-  val QueueName = "words"
+  val QueueName = s"${global.ns}:words"
     
   implicit val timeout = Timeout(2.seconds)
     

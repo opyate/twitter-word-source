@@ -20,28 +20,12 @@ class AnalyticsActor extends Actor {
   
   private [this] def record(word: String) {
     // bump the overall count
-    db.incr("count")
+    db.incr(s"${global.ns}:count")
     
     // bump the count for the word
-    incRankings("topWords", word)
+    db.zincrby(s"${global.ns}:topWords", 1, word)
     
     // bump the count for the individual letters
-    word.foreach { letter => incRankings("topLetters", letter.toString)}
-  }
-  
-  /**
-   * item => a word or letter that needs to be scored
-   */
-  private [this] def incRankings(setName: String, item: String) {
-    // bump the count for the item
-    db.incr(item)
-    
-    // add the word to the top list by its score
-    val wordScore = db.get(item)
-    wordScore.onSuccess {
-      case Some(score) => {
-        db.zadd(setName, score.toDouble, item)
-      }
-    }
+    word.foreach { letter => db.zincrby(s"${global.ns}:topLetters", 1, letter.toString)}
   }
 }

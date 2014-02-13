@@ -10,6 +10,6 @@ import core.CorePlumbing
 trait Web {
   this: Api with CorePlumbing with Core =>
 
-  IO(Http)(system) ! Http.Bind(rootService, "0.0.0.0", port = 3000)
+  IO(Http)(system) ! Http.Bind(rootService, "0.0.0.0", port = System.getenv("PORT").toInt)
 
 }

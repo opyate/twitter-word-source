@@ -21,7 +21,7 @@ class AnalyticsService(db: RedisClient)(implicit executionContext: ExecutionCont
         get {
           respondWithMediaType(`application/json`) {
             complete {
-              val x = db.get("count")
+              val x = db.get(s"${global.ns}:count")
               x
             }
           }
@@ -31,7 +31,7 @@ class AnalyticsService(db: RedisClient)(implicit executionContext: ExecutionCont
         get {
           respondWithMediaType(`application/json`) {
             complete {
-              val x = db.zrevrange("topWords", 0, num.toInt - 1)
+              val x = db.zrevrangeWithScores(s"${global.ns}:topWords", 0, num.toInt - 1)
               x
             }
           }
@@ -41,7 +41,7 @@ class AnalyticsService(db: RedisClient)(implicit executionContext: ExecutionCont
         get {
           respondWithMediaType(`application/json`) {
             complete {
-              val x = db.zrevrange("topLetters", 0, num.toInt - 1)
+              val x = db.zrevrangeWithScores(s"${global.ns}:topLetters", 0, num.toInt - 1)
               x
             }
           }
